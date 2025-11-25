@@ -22,10 +22,7 @@ class PlatformAppBar extends StatelessWidget implements PreferredSizeWidget {
     if (Platform.isIOS) {
       return CupertinoNavigationBar(
         middle: title != null
-            ? Text(
-                title!,
-                style: AppTextStyles.semiBold(25, color: AppColors.lightText),
-              )
+            ? Text(title!, style: Theme.of(context).textTheme.headlineMedium)
             : null,
         leading: backButton,
         trailing: rightButtons != null
@@ -36,10 +33,7 @@ class PlatformAppBar extends StatelessWidget implements PreferredSizeWidget {
     }
     return AppBar(
       title: title != null
-          ? Text(
-              title!,
-              style: AppTextStyles.semiBold(25, color: AppColors.lightText),
-            )
+          ? Text(title!, style: Theme.of(context).textTheme.headlineMedium)
           : null,
       leading: backButton,
       actions: rightButtons,

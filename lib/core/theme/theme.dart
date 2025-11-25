@@ -21,6 +21,10 @@ class AppTheme {
       titleMedium: AppTextStyles.semiBold(18, color: AppColors.lightText),
       bodyMedium: AppTextStyles.regular(16, color: AppColors.lightGrey),
     ),
+    iconTheme: IconThemeData(
+      size: 43,
+      color: AppColors.lightText, // your custom color
+    ),
   );
 
   /// DARK THEME
@@ -40,6 +44,10 @@ class AppTheme {
       headlineMedium: AppTextStyles.bold(24, color: AppColors.darkText),
       titleMedium: AppTextStyles.semiBold(18, color: AppColors.darkText),
       bodyMedium: AppTextStyles.regular(16, color: AppColors.darkGrey),
+    ),
+    iconTheme: IconThemeData(
+      size: 43,
+      color: AppColors.darkText, // your custom color
     ),
   );
 }
