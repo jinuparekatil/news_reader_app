@@ -33,8 +33,10 @@ class NewsResponse {
   NewsResponse({required this.news, required this.error});
   factory NewsResponse.fromJson(Map<String, dynamic> json) {
     return NewsResponse(
-      news: (json["articles"] as List).map((e) => NewsModel.fromJson(e)).toList(),
-      error:  "",
+      news: (json["articles"] as List)
+          .map((e) => NewsModel.fromJson(e))
+          .toList(),
+      error: "",
     );
   }
   NewsResponse.showError(String errorValue) : news = [], error = errorValue;

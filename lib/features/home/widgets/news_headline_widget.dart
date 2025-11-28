@@ -1,10 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:news_reader_app/core/theme/app_colors.dart';
 import 'package:news_reader_app/core/theme/app_text_styles.dart';
 import 'package:news_reader_app/core/theme/theme.dart';
 
 class NewsHeadlineWidget extends StatelessWidget {
-  const NewsHeadlineWidget({super.key});
+  final String author;
+  final String title;
+  final String description;
+  final String image;
+  final String date;
+  final String url;
+  NewsHeadlineWidget(
+    this.author,
+    this.title,
+    this.description,
+    this.image,
+    this.date,
+    this.url,
+  );
+
+  // const NewsHeadlineWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -15,14 +31,14 @@ class NewsHeadlineWidget extends StatelessWidget {
         elevation: 5,
         child: Row(
           children: [
-            Image(
-              width: MediaQuery.of(context).size.width * 0.33,
-              height: 144,
-              image: NetworkImage(
-                "https://cdn.pixabay.com/photo/2017/06/26/19/03/news-2444778_1280.jpg",
-              ),
-              fit: BoxFit.fill,
-            ),
+            image == ''
+                ? Container()
+                : Image(
+                    width: MediaQuery.of(context).size.width * 0.33,
+                    height: 144,
+                    image: NetworkImage(image),
+                    fit: BoxFit.fill,
+                  ),
             SizedBox(width: 10),
             Expanded(
               child: Padding(
@@ -30,24 +46,26 @@ class NewsHeadlineWidget extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      "Your trusted source for breaking news, analysis, exclusive interviews, headlines, and videos at ABCNews.com",
-                      style: Theme.of(context).textTheme.bodyLarge,
-                    ),
+                    Text(title, style: Theme.of(context).textTheme.bodyLarge),
                     SizedBox(height: 3),
                     Padding(
                       padding: const EdgeInsets.only(right: 10.0),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
-                            "John Smith",
-                            style: Theme.of(context).textTheme.bodyMedium,
+                          Expanded(
+                            child: Text(
+                              author,
+                              style: Theme.of(context).textTheme.bodyMedium,
+                            ),
                           ),
-                          Text(
-                            "12-05-25",
-                            style: Theme.of(context).textTheme.bodyMedium,
-                          ),
+                          Text(() {
+                            print("DATE: $date, IMAGE: $image");
+                            final parsed = DateTime.tryParse(date);
+                            return parsed != null
+                                ? DateFormat.yMd().format(parsed)
+                                : "Invalid date";
+                          }(), style: Theme.of(context).textTheme.bodyMedium),
                         ],
                       ),
                     ),
