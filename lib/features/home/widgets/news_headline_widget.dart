@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:news_reader_app/core/theme/app_colors.dart';
 import 'package:news_reader_app/core/theme/app_text_styles.dart';
 import 'package:news_reader_app/core/theme/theme.dart';
+import 'package:news_reader_app/features/home/view/view_news_screen.dart';
 
 class NewsHeadlineWidget extends StatelessWidget {
   final String author;
@@ -101,7 +102,15 @@ class NewsHeadlineWidget extends StatelessWidget {
                             width: 70,
                             height: 35,
                             child: TextButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        ViewNewsScreen(url: url),
+                                  ),
+                                );
+                              },
                               style: TextButton.styleFrom(
                                 backgroundColor: Theme.of(
                                   context,
