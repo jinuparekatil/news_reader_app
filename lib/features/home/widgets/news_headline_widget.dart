@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 import 'package:intl/intl.dart';
 import 'package:news_reader_app/core/theme/app_colors.dart';
 import 'package:news_reader_app/core/theme/app_text_styles.dart';
@@ -20,6 +21,15 @@ class NewsHeadlineWidget extends StatelessWidget {
     this.url,
   );
 
+  FlutterTts tts = FlutterTts();
+
+  speak(String text) async {
+    print(await tts.getLanguages);
+    await tts.setLanguage('en-US');
+    await tts.setPitch(1);
+    await tts.setVolume(1);
+    await tts.speak(text);
+  }
   // const NewsHeadlineWidget({super.key});
 
   @override
@@ -77,8 +87,14 @@ class NewsHeadlineWidget extends StatelessWidget {
                         children: [
                           Row(
                             children: [
-                              Icon(Icons.play_arrow_sharp),
-                              Icon(Icons.stop),
+                              InkWell(
+                                onTap: () => speak(description),
+                                child: Icon(Icons.play_arrow_sharp),
+                              ),
+                              InkWell(
+                                onTap: () => tts.stop(),
+                                child: Icon(Icons.stop),
+                              ),
                             ],
                           ),
                           Container(
