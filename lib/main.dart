@@ -4,6 +4,8 @@ import 'package:news_reader_app/core/theme/theme.dart';
 import 'features/home/view/news_screen.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+
   runApp(const MyApp());
 }
 
