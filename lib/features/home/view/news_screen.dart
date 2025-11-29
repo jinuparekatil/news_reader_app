@@ -5,6 +5,7 @@ import 'package:news_reader_app/core/theme/app_text_styles.dart';
 import 'package:news_reader_app/core/theme/app_colors.dart';
 import 'package:news_reader_app/data/models/newsmodel.dart';
 import 'package:news_reader_app/features/home/bloc/get_news_bloc.dart';
+import 'package:news_reader_app/features/home/bloc/select_category_bloc.dart';
 import 'package:news_reader_app/features/home/widgets/news_headline_widget.dart';
 import '../widgets/platform_appbar.dart';
 
@@ -17,11 +18,14 @@ class NewsScreen extends StatefulWidget {
 
 class _NewsScreenState extends State<NewsScreen> {
   late GetNewsBloc getNewsBloc;
+  late SelectCategoryBloc selectCategoryBloc;
+
   @override
   void initState() {
     super.initState();
     getNewsBloc = GetNewsBloc();
     getNewsBloc..getNews("General", "us");
+    selectCategoryBloc = SelectCategoryBloc();
   }
 
   @override
@@ -33,24 +37,39 @@ class _NewsScreenState extends State<NewsScreen> {
         child: Column(
           children: [
             SizedBox(height: 20),
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                children: newsCategories
-                    .map(
-                      (category) => Padding(
+            StreamBuilder(
+              stream: selectCategoryBloc.categoryStream,
+              initialData: selectCategoryBloc.defaultCategory,
+              builder: (context, asyncSnapshot) {
+                return SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: newsCategories.map((category) {
+                      final isSelected = asyncSnapshot.data == category;
+
+                      return Padding(
                         padding: const EdgeInsets.only(left: 15.0),
-                        child: Text(
-                          category,
-                          style: AppTextStyles.semiBold(
-                            23,
-                            color: AppColors.lightGrey,
+                        child: InkWell(
+                          onTap: () =>
+                              selectCategoryBloc.selectCategory(category),
+                          child: Text(
+                            category,
+                            style: isSelected
+                                ? AppTextStyles.semiBold(
+                                    16,
+                                    color: AppColors.selectedText(context),
+                                  )
+                                : AppTextStyles.semiBold(
+                                    16,
+                                    color: AppColors.unselectedText(context),
+                                  ),
                           ),
                         ),
-                      ),
-                    )
-                    .toList(),
-              ),
+                      );
+                    }).toList(),
+                  ),
+                );
+              },
             ),
             SizedBox(height: 20),
             StreamBuilder<NewsResponse>(

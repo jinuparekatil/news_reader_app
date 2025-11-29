@@ -6,7 +6,7 @@ class GetNewsBloc {
   final Newsrepository newsrepository = Newsrepository();
   final BehaviorSubject<NewsResponse> _subject =
       BehaviorSubject<NewsResponse>();
-  BehaviorSubject<NewsResponse> get subject => _subject;
+      BehaviorSubject<NewsResponse> get subject => _subject;
 
   getNews(String category, String country) async {
     NewsResponse newsResponse = await newsrepository.getNews(category, country);
